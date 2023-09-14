@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% block title %}{{profile.name}} {% endblock %}
+{% block btn-denied %}{% endblock %}
+{% block content %}
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row mt-3">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              {% if profile.image %}
+              <img src="{{profile.image.url}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              {% endif %}
+                {% if profile.name %}
+                  <h5 class="my-3">{{profile.name}}</h5>
+                {% else %}
+                <h5 class="my-3">{{user.get_username}}</h5>
+                {% endif %}
+              <div class="d-flex justify-content-center mb-2">
+                {% if user.profile ==  profile %}
+                  <a href="{% url 'edit-profile' profile.id %}" class="btn btn-primary">Edit Profile</a>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.name}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  {% if profile.email %}
+                    <p class="text-muted mb-0">{{profile.email}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{profile.phone}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Bio</p>
+                </div>
+                <div class="col-sm-9">
+                  {% if profile.bio %}
+                    <p class="text-muted mb-0">{{profile.bio}}</p>
+                  {% endif %}
+                </div>
+              </div>
+              <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

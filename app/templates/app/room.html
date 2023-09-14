@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+{% block title %} {{room.name}}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <span>This room is hosted by: <a href="{% url 'profile' room.host.profile.id %}"><strong>{{room.host}}</strong></a> </span>
+                <h3 class="mt-3">Room Name: {{room.name}}</h3>
+                <div class="card bg-card-color mt-3">
+                    <div class="card-header">
+                        <h3 class="mt-3">Chat About Room Here</h3>
+                    </div>
+                    <div class="card-body bg-card-color">
+                        <section style="background-color: #eee;">
+
+                              <div class="row d-flex justify-content-center">
+                                {% for chat in room_messages %}
+
+                                  {% if chat.user == room.host %}
+                                    <div class="d-flex justify-content-between">
+                                        <p class="small mb-1 text-muted">{{chat.created | timesince}} ago</p>
+                                        <p class="small mb-1">{{chat.user}}</p>
+                                      </div>
+                                      <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                                        <div>
+                                          <p class="small p-2 me-3 mb-3 text-white rounded-3 bg-warning">
+                                            {{chat.body}}
+                                            &nbsp;
+                                            <span>
+                                              {% if request.user == chat.user %}
+                                              <a href="{% url 'delete-message' chat.id %}">
+                                              <i class="fa-solid fa-delete-left fa-0x"></i>
+                                              </a>
+                                              {% endif %}
+                                            </span>
+                                          </p>
+                                        </div>
+                                        {% if chat.user.profile.image %}
+                                        <img src="{{chat.user.profile.image.url}}"
+                                          alt="" style="width: 45px; height: 100%;">
+                                        {% endif %}
+                                    </div>
+                                  {% else %}
+                                    <div class="d-flex justify-content-between">
+                                      <p class="small mb-1">{{chat.user}}</p>
+                                      <p class="small mb-1 text-muted">{{chat.created | timesince}} ago</p>
+                                    </div>
+                                  
+                                    <div class="d-flex flex-row justify-content-start mb-3">
+                                      {% if chat.user.profile.image %}
+                                        <img src="{{chat.user.profile.image.url}}"
+                                          alt="" style="width: 45px; height: 100%;">
+                                      {% endif %}
+                                      <div>
+
+                                        <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">{{chat.body}}
+                                          &nbsp;&nbsp;
+                                          <span>
+                                            {% if request.user == chat.user %}
+                                            <a href="{% url 'delete-message' chat.id %}">
+                                            <i class="fa-solid fa-delete-left fa-0x"></i>
+                                            </a>
+                                            {% endif %}
+                                          </span>
+                                        </p>
+
+
+                                      </div>
+                                    </div>
+                                  {% endif %}
+
+                                {% endfor %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                      <div class="input-group mb-0">
+                                        <textarea name="body"  class="form-control" rows="2"></textarea>
+                                        &nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-success mt-3 ">
+                                          Send
+                                        </button>
+                                      </div>
+                                      </form>
+                                      <div class="text-end">
+                                        <a href="#top" class="btn btn-outline-secondary mt-4">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </a>
+                                    </div>
+                              </div>
+                          </section>
+                    </div>
+                    </div>
+            </div>
+            <div class="col-md-4">
+              <h4 class="text-end">Participants</h4>
+              {% for participant in participants %}
+              <br>
+               <a href="{% url 'profile' participant.profile.id %}"> <p class="text-end">{{participant}}</p></a>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

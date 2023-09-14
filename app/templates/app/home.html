@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% block title %} Home {% endblock %}
+weerjrekwrej
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card-border">
+                <a href="{% url 'home' %}">
+                    <h3>All {{categories.count}}</h3>
+                </a>
+                {% for category in categories %}
+                <a href="{% url 'home' %}?q={{category.title}}">
+                    <br>
+                    <span><strong>{{category.title}}</strong></span>
+                </a>
+
+                {% endfor %}
+            </div>  
+        </div>
+        <div class="col-md-5">
+            <h3><a href="{% url 'create-room' %}">Create Room</a></h3>
+            <p class="text-primary">Room Available: {{rooms_count}}</p>
+            {% for room in rooms %}
+                <span>Room created by:<strong>{{room.host.username}}</strong> </span>
+            
+                {% if request.user == room.host %}
+                    <a href="{% url 'delete-room' room.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a href="{% url 'edit-room' room.id %}" class="btn btn-info  btn-sm">
+                        <i class="fa-solid fa-pen-to-square"></i>           
+                    </a>       
+                {% endif %}
+                <a href="{% url 'room' room.id %}"><h3>{{room.name}}</h3></a> 
+            {% endfor %}
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <div>
+                    <h2>Recent Activities</h2>
+                    </div>
+                    {% for message in room_messages %}
+                        <div>
+                            <div>
+                                <a
+                                href="{% url 'profile' message.user.profile.id %}"
+                                
+                                >
+                                <div>
+                                    <img src="{{message.user.image.url}}" />
+                                </div>
+                                <p>
+                                    @{{message.user.username}}
+                                    <span>{{message.created|timesince}} ago</span>
+                                    &nbsp;&nbsp;
+                                </a>
+                                    {% if request.user == message.user %}
+                                    <a href="{% url 'delete-message' message.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-delete-left"></i>
+                                    </a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        <div>
+                            <p>
+                            replied to post “<a href="{% url 'room' message.room.id %}"
+                                >{{message.room}}</a
+                            >”
+                            </p>
+                            <div class="activities__boxRoomContent">{{message.body}}</div>
+                        </div>
+                        </div>
+                    {% endfor %}
+              </div>
+              
+        </div>
+
+    </div>
+{% endblock %}

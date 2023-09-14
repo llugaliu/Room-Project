@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% block title %} Create Room {% endblock %}
+{% block content %}
+<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card rounded-3">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Edit Room</h3>
+  
+              <form method="post" class="px-md-2">
+                {% csrf_token %}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example1q">Name</label>
+                    <input type="text" name="name" id="form3Example1q" class="form-control" />
+                </div>  
+  
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <select name="category">
+                        {% for category in categories %}
+                        <option value="{{category.title}}">{{category.title}}</option>
+                        {% endfor %}
+
+                    </select>  
+                  </div>
+                </div>
+                <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                  <div class="col-md-6">
+                    <div class="form-outline">
+                        <label class="form-label" for="form3Example1w">Description</label>
+                        <input type="text" id="form3Example1w"  name="description" {{form.label.description}} class="form-control" />
+                    </div>
+  
+                  </div>
+                </div>
+  
+                <button type="submit" class="btn btn-success btn-lg mb-1">Edit</button>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

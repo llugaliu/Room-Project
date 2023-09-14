@@ -1,0 +1,25 @@
+body {
+    background-color: rgb(212, 189, 189);
+}
+
+.navbar-color {
+    background-color: gainsboro;
+}
+
+.bg-card-color {
+    background-color: #eee;
+}
+
+.bg-color {
+    background-color: rgb(98, 137, 153);
+}
+
+.labels {
+    background-color: aquamarine;
+}
+
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}

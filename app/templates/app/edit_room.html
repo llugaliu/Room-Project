@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% block title %}Edit {{room.name}} {% endblock %}
+{% block content %}
+<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card rounded-3 labels">
+            <div class="card-body p-4 p-md-5 labels">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Edit Room</h3>
+  
+              <form method="post" class="px-md-2 labels">
+                {% csrf_token %}
+                <div class="form-outline mb-4 labels">
+                    <label class="form-label labels" for="form3Example1q">Name</label>
+                    <input type="text" name="name" value="{{room.name}}" id="form3Example1q" class="form-control" />
+                </div>  
+  
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <select name="category">
+                        <option disabled title="Room Actual Category" value="{{room.category}}">{{room.category}}</option>
+                        {% for category in categories %}
+                        <option value="{{category.title}}">{{category.title}}</option>
+                        {% endfor %}
+
+                    </select>  
+                  </div>
+                </div>
+                <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                  <div class="col-md-6">
+                    <div class="form-outline">
+                        <label class="form-label" for="form3Example1w">Description</label>
+                        <input type="text" id="form3Example1w" value="{{room.description}}" name="description" {{form.label.description}} class="form-control" />
+                    </div>
+  
+                  </div>
+                </div>
+  
+                <button type="submit" class="btn btn-success btn-lg mb-1">Edit</button>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
